@@ -10,13 +10,8 @@ const port = 3000;
 const app = express();
 //.use is needed whenever you want to use a middleware module
 app.use(morgan('dev'));
-//The below __dirname method is telling express to look at the static file in the /public file.
-app.use(express.static(__dirname+ '/public'));
+app.use(bodyParser.json());
 
-
-
-
-app.use(bodyParser.json);
 // when a request comes in using app.all means all of the requests no matter which method is used the code below is used first.
 app.all('/dishes', (req, res, next)=>{
     res.statusCode = 200;
@@ -62,10 +57,10 @@ app.post('/dishes/:dishId', (req,res,next) => {
 });
 
 app.put('/dishes/:dishId', (req,res,next) => {
-    //res.write can be used to add a line to the reply message. (the '/n' adds a new line)
-    res.write('Updating the dish: ' + req.params.dishId + '/n');
+    //res.write can be used to add a line to the reply message. (the '\n' adds a new line)
+    res.write('Updating the dish: ' + req.params.dishId + '\n');
     //Since this is a PUT operation and if the body contains the JSON string which contains the details of the dish, we can extract the details of the dish because we are using the body parser (using req.body.name as the body (in this example?) contains a name parameter).
-    res.end('Will update the dish '+ req.body.name + 'with details: '+ req.body.description);
+    res.end('Will update the dish '+ req.body.name + ' with details: '+ req.body.description);
 });
 
 app.delete('/dishes/:dishId', (req,res,next) => {
@@ -73,7 +68,8 @@ app.delete('/dishes/:dishId', (req,res,next) => {
 });
 
 
-
+//The below __dirname method is telling express to look at the static file in the /public file.
+app.use(express.static(__dirname+ '/public'));
 
 //next is used when you need to invoke additional middleware to take care of work on your behalf. In the function below next is an optional parameter.
 app.use((req,res,next) => {
@@ -83,8 +79,6 @@ app.use((req,res,next) => {
     res.setHeader('Content-Type', 'text/html');
     res.end('<html><body><h1>This is an Express server</h1></body></html>')
 });
-
-
 
 const server = http.createServer(app);
 
