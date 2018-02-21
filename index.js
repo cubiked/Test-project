@@ -20,9 +20,9 @@ app.use(bodyParser.json());
 
 
 //here's where we mount the router at the specific endpoint, therefore the first parameter is the endpoint(s) then the second parameter is the router
-app.use(['/dishes','/dishes/:dishId'], dishRouter);
-app.use(['/leaders','/leaders/:leaderId'], leaderRouter);
-app.use(['/promotions', '/promotions/promoId'], promoRouter);
+app.use('/dishes', dishRouter);
+app.use('/leaders', leaderRouter);
+app.use('/promotions', promoRouter);
 
 
 //The below __dirname variable is telling express to look at the static file in the /public file.

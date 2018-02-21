@@ -25,6 +25,11 @@ leaderRouter.route('/')
 });
 
 leaderRouter.route('/:leaderId')
+.all((req,res,next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    next();
+})
 .get((req,res,next) => {
     res.end('Will send details of the leader: '+ req.params.leaderId + ' to you!');
 })
